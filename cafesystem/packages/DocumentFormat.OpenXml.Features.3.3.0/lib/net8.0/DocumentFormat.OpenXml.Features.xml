@@ -1,0 +1,168 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DocumentFormat.OpenXml.Features</name>
+    </assembly>
+    <members>
+        <member name="T:DocumentFormat.OpenXml.Features.ISharedFeature`1">
+            <summary>
+            A feature to create a composite feature if shared among multiple instances.
+            </summary>
+            <typeparam name="T">Type of shared feature.</typeparam>
+        </member>
+        <member name="P:DocumentFormat.OpenXml.Features.ISharedFeature`1.Count">
+            <summary>
+            Gets the count of features registered.
+            </summary>
+        </member>
+        <member name="M:DocumentFormat.OpenXml.Features.ISharedFeature`1.Add(`0)">
+            <summary>
+            Adds an instance to the shared collection.
+            </summary>
+            <param name="feature">Feature to add</param>
+        </member>
+        <member name="M:DocumentFormat.OpenXml.Features.ISharedFeature`1.Remove(`0)">
+            <summary>
+            Removes a feature instance from the shared collection.
+            </summary>
+            <param name="feature">Feature to remove.</param>
+            <returns>Whether the feature was removed or not.</returns>
+        </member>
+        <member name="P:DocumentFormat.OpenXml.Features.ISharedFeature`1.Composite">
+            <summary>
+            Gets a composite feature that handles delegating to the registered features in the collection.
+            </summary>
+        </member>
+        <member name="T:DocumentFormat.OpenXml.Features.IParagraphIdCollectionFeature">
+            <summary>
+            Provides access to the paragraph id collection in a document.
+            </summary>
+        </member>
+        <member name="P:DocumentFormat.OpenXml.Features.IParagraphIdCollectionFeature.Count">
+            <summary>
+            Gets a count of all the registered paragraph ids.
+            </summary>
+        </member>
+        <member name="M:DocumentFormat.OpenXml.Features.IParagraphIdCollectionFeature.Contains(System.String)">
+            <summary>
+            Identifies if the id exists.
+            </summary>
+            <param name="id">The id to check.</param>
+            <returns>Whether the feature is tracking that id.</returns>
+        </member>
+        <member name="T:DocumentFormat.OpenXml.Features.IParagraphIdGeneratorFeature">
+            <summary>
+            A generator for paragraph id values that can ensure uniqueness if <see cref="T:DocumentFormat.OpenXml.Features.IParagraphIdCollectionFeature"/> is registered.
+            </summary>
+        </member>
+        <member name="M:DocumentFormat.OpenXml.Features.IParagraphIdGeneratorFeature.CreateUniqueParagraphId">
+            <summary>
+            Creates a w14:paraId (ParagraphId) value that is greater than 0x00000000, less than
+            0x80000000, and unique within the scope of the <see cref="T:DocumentFormat.OpenXml.Features.IParagraphIdCollectionFeature" />
+            instance.
+            </summary>
+            <returns>A unique paragraph id value.</returns>
+        </member>
+        <member name="T:DocumentFormat.OpenXml.Features.ParagraphIdFeatureExtensions">
+            <summary>
+            Extensions to add paragraph id generation to a document
+            </summary>
+        </member>
+        <member name="M:DocumentFormat.OpenXml.Features.ParagraphIdFeatureExtensions.AddParagraphIdFeature(DocumentFormat.OpenXml.Packaging.WordprocessingDocument,DocumentFormat.OpenXml.Features.ParagraphIdOptions)">
+            <summary>
+            Add the paragraph id feature if not already registered.
+            </summary>
+            <param name="doc">Document to add feature to.</param>
+            <param name="options">Options of how paragraph ids should be generated.</param>
+        </member>
+        <member name="M:DocumentFormat.OpenXml.Features.ParagraphIdFeatureExtensions.AddParagraphIdGeneratorFeature(DocumentFormat.OpenXml.Packaging.WordprocessingDocument)">
+            <summary>
+            Adds a <see cref="T:DocumentFormat.OpenXml.Features.IParagraphIdGeneratorFeature"/> if not already available.
+            </summary>
+            <param name="doc">Document to add generator to.</param>
+        </member>
+        <member name="T:DocumentFormat.OpenXml.Features.ParagraphIdOptions">
+            <summary>
+            Options to declare how paragraph ids should be generated.
+            </summary>
+        </member>
+        <member name="P:DocumentFormat.OpenXml.Features.ParagraphIdOptions.AutoGenerateIds">
+            <summary>
+            Gets or sets a value indicating whether or not paragraph ids should be auto-generated on elements.
+            </summary>
+        </member>
+        <member name="P:DocumentFormat.OpenXml.Features.ParagraphIdOptions.EnsureUniquenessOnExistingNodes">
+            <summary>
+            Gets or sets a value indicating whether or not uniqueness should be guaranteed on elements added to the document. This will change a node's para id if it has already been registered.
+            </summary>
+        </member>
+        <member name="T:DocumentFormat.OpenXml.Features.SharedParagraphIdFeatureExtensions">
+            <summary>
+            A collection of extensions that will add support for shared <see cref="T:DocumentFormat.OpenXml.Features.IParagraphIdCollectionFeature"/> instances among multiple documents.
+            </summary>
+        </member>
+        <member name="M:DocumentFormat.OpenXml.Features.SharedParagraphIdFeatureExtensions.AddSharedParagraphIdFeature(DocumentFormat.OpenXml.Packaging.WordprocessingDocument)">
+            <summary>
+            Registers a document for a shared paragraph id collection.
+            </summary>
+            <param name="doc">Document to register for a shared collection.</param>
+            <returns>The existing or new shared collection.</returns>
+        </member>
+        <member name="M:DocumentFormat.OpenXml.Features.SharedParagraphIdFeatureExtensions.Add(DocumentFormat.OpenXml.Features.ISharedFeature{DocumentFormat.OpenXml.Features.IParagraphIdCollectionFeature},DocumentFormat.OpenXml.Packaging.WordprocessingDocument)">
+            <summary>
+            Registers a document to use a shared paragraph collection, which potentially may ensure uniqueness among many documents.
+            </summary>
+            <param name="shared">Shared collection feature.</param>
+            <param name="doc">Document to register with shared paragraph collection.</param>
+            <returns></returns>
+        </member>
+        <member name="M:DocumentFormat.OpenXml.Features.SharedParagraphIdFeatureExtensions.Add(DocumentFormat.OpenXml.Features.ISharedFeature{DocumentFormat.OpenXml.Features.IParagraphIdCollectionFeature},System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Add arbitrary values to be tracked as a shared collection.
+            </summary>
+            <param name="shared">Shared collection feature.</param>
+            <param name="paragraphIds">Paragraph ids to be included with the shared collection.</param>
+            <returns></returns>
+        </member>
+        <member name="T:DocumentFormat.OpenXml.Features.IRandomNumberGeneratorFeature">
+            <summary>
+            A feature to generate random numbers
+            </summary>
+        </member>
+        <member name="M:DocumentFormat.OpenXml.Features.IRandomNumberGeneratorFeature.GetBytes(System.Byte[])">
+            <summary>
+            Fills the supplied bytes with random values.
+            </summary>
+            <param name="bytes">Bytes to fill.</param>
+        </member>
+        <member name="T:DocumentFormat.OpenXml.Features.RandomNumberGeneratorFeatureExtensions">
+            <summary>
+            Extensions to add a random number generator to a feature set.
+            </summary>
+        </member>
+        <member name="M:DocumentFormat.OpenXml.Features.RandomNumberGeneratorFeatureExtensions.AddRandomNumberGeneratorFeature(DocumentFormat.OpenXml.Packaging.OpenXmlPackage)">
+            <summary>
+            Add a random number generator to the package.
+            </summary>
+        </member>
+        <member name="T:DocumentFormat.OpenXml.HexStringFactory">
+            <summary>
+            A factory of hex strings.
+            </summary>
+        </member>
+        <member name="M:DocumentFormat.OpenXml.HexStringFactory.Create(System.ReadOnlySpan{System.Byte})">
+            <summary>
+            Returns a new hex string that was created from <paramref name="bytes"/>.
+            </summary>
+            <param name="bytes">A byte array to use to create a new hex string.</param>
+            <returns>A hex string that corresponds to the value parameter.</returns>
+        </member>
+        <member name="M:DocumentFormat.OpenXml.HexStringFactory.Create(System.Byte[])">
+            <summary>
+            Returns a new hex string that was created from <paramref name="bytes"/>.
+            </summary>
+            <param name="bytes">A byte array to use to create a new hex string.</param>
+            <returns>A hex string that corresponds to the value parameter.</returns>
+        </member>
+    </members>
+</doc>
